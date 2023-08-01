@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<table>
+    <thead>
+        <th>ID</th>
+        <th>Nama</th>
+        <th>Jabatan</th>
+        <th>Cabang</th>
+        <th>Agen</th>
+        <th>Salary</th>
+        <th>Alamat</th>
+        <th>No HP</th>
+    </thead>
+{% for karyawan in karyawans %}
+    
+        <tr>
+            <td>{{ karyawan.id }}</td>
+            <td>{{ karyawan.nama_karyawan }}</td>
+            <td>{{ karyawan.jabatan }}</td>
+            <td>{{ karyawan.branch_id }}</td>
+            <td>{{ karyawan.agen_id }}</td>
+            <td>{{ karyawan.salary }}</td>
+            <td>{{ karyawan.alamat_karyawan }}</td>
+            <td>{{ karyawan.no_hp_karyawan }}</td>
+        </tr>
+  
+{% endfor %}
+</table>
+{% endblock %}
