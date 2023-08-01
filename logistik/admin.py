@@ -5,7 +5,7 @@ class KaryawanAdmin(admin.ModelAdmin):
     list_display = ['id','nama_karyawan', 'jabatan','salary','no_hp_karyawan']
     search_fields = ['jabatan']
     list_filter = ['jabatan']
-    list_per_page = 4
+    list_per_page = 10
 
 admin.site.register(Branch)
 admin.site.register(Agen)
