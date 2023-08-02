@@ -1,57 +1,27 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }}</title>
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <!-- Bootstrap core CSS -->
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-    <!-- material icons cdn -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
-    <!-- Custom styles for this template -->
-    <link href="{% static 'css/simple-sidebar.css' %}" rel="stylesheet">
-
-    <!-- common css -->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/common.css' %}">
-    
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous"> -->
+    {% include 'head.html' %}
 </head>
 <body>
     <div id="main-wrapper">
         <!-- sidebar -->
 
         {% include 'sidebar.html' %}
-       
+    
         <!-- /#sidebar -->
         
-        <div id="main-content">
+        <!-- navbar -->
             {% include 'header.html' %}
-
-            <div>
-                {% block content %}
-                {% endblock %}
-            </div>
-
-            
-        </div>
+        <!-- endnavbar -->
         
-
-            
+        <div id="main-content" class="container">
+            {% block content %}
+            {% endblock %}
+        </div>
     </div>
-
      <!-- Bootstrap core JavaScript -->
-    <script src="{% static 'js/jquery.js' %}"></script>
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
- 
-     <!-- Menu Toggle Script -->
-     <script>
-     $("#menu-toggle").click(function(e) {
-         e.preventDefault();
-         $("#main-wrapper").toggleClass("toggled");
-     });
-     </script>
+     {% include 'filejs.html' %}
+     
 </body>
 </html>

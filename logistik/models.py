@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.text import slugify
 
 
 class Customer(models.Model):
@@ -16,15 +17,26 @@ class Customer(models.Model):
     
 
 class Branch(models.Model):
+  id_branch = models.CharField(max_length=10, blank=True, null=True)
   nama_branch = models.CharField(max_length=20)
   alamat_branch = models.TextField(max_length=100)
   alamat_singkat_branch = models.CharField(max_length=20)
   no_telp_branch = models.CharField(max_length=20)
+  slug_branch = models.SlugField(blank=True,editable=False)
 
+
+  def save(self):
+    self.slug_branch = slugify(self.id_branch)
+    super(Branch, self).save()
+    
   def __str__(self):
-    return self.nama_branch
+    # template = '{0.nama_branch}'
+    return "{}. {}".format(self.id_branch, self.nama_branch)
+  
+  
   
 class Agen(models.Model):
+  id_agen = models.CharField(max_length=10,blank=True, null=True)
   nama_agen = models.CharField(max_length=20)
   alamat_agen = models.TextField(max_length=100)
   alamat_singkat_agen = models.CharField(max_length=20)
@@ -32,9 +44,13 @@ class Agen(models.Model):
   branch_id = models.ForeignKey(Branch, on_delete=models.CASCADE, null=True )
 
   def __str__(self):
+    # template = '{0.nama_agen}'
     return self.nama_agen
-  
+  # template.format(self)
+
+
 class Karyawan(models.Model):
+  id_karyawan = models.CharField(max_length=10, blank=True,null=True)
   nama_karyawan = models.CharField(max_length=50)
   jabatan = models.CharField(max_length=15)
   branch_id = models.ForeignKey(Branch, on_delete = models.CASCADE,null=True)
@@ -42,7 +58,9 @@ class Karyawan(models.Model):
   salary = models.IntegerField()
   alamat_karyawan = models.TextField()
   no_hp_karyawan = models.CharField(max_length=15)
+
   def __str__(self):
+    # template = '{0.nama_karyawan}'
     return self.nama_karyawan
 
 

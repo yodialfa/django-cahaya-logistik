@@ -74,6 +74,9 @@ DATABASES = {
         'PASS': 'yodi',
         'HOST': 'localhost',
         'PORT': '3308',
+        'OPTIONS': {
+            'sql_mode': 'traditional',
+        }
     }
 }
 

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Karyawan
+from .models import Karyawan, Branch
 # from django.http import HttpResponse
 
 def cs(request):
@@ -8,6 +8,7 @@ def cs(request):
     nama_karyawan = "Yodi"
     
     konteks = {
+        'title' : 'CS Input',
         'id_agen' : id_agen,
         'id_karyawan' : id_karyawan,
         'nama_karyawan' : nama_karyawan,
@@ -25,6 +26,7 @@ def laporan_harian(request):
     tujuan = "Ciamis"
     total_ongkir = 10000
     konteks = {
+        'title' : 'Laporan Harian',
         'no' : no,
         'no_resi' : no_resi,
         'nama_pengirim' : nama_pengirim,
@@ -45,4 +47,16 @@ def data_karyawan(request):
 
     }
     return render(request, 'data_karyawan.html', konteks)
+
+def cabang(request):
+#    //query ambil data Karyawan
+    cabangs = Branch.objects.all()
+    print(cabangs)
+    cabs = {
+        'title' : 'Data Cabang',
+        'headings' : 'Data Cabang',
+        'cabangs' : cabangs,
+
+    }
+    return render(request, 'cabang.html', cabs)
 
