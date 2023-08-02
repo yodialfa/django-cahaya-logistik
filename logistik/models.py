@@ -26,7 +26,7 @@ class Branch(models.Model):
 
 
   def save(self):
-    self.slug_branch = slugify(self.id)
+    self.slug_branch = slugify(self.id_branch)
     super(Branch, self).save()
 
   def __str__(self):
@@ -57,7 +57,13 @@ class Karyawan(models.Model):
   agen_id = models.ForeignKey(Agen, on_delete = models.CASCADE,null=True)
   salary = models.IntegerField()
   alamat_karyawan = models.TextField()
+  kota_karyawan = models.CharField(max_length=30, null=True)
   no_hp_karyawan = models.CharField(max_length=15)
+  slug_karyawan = models.SlugField(blank=True, editable=False)
+
+  def save(self):
+    self.slug_karyawan = slugify(self.id)
+    super(Karyawan, self).save()
 
   def __str__(self):
     # template = '{0.nama_karyawan}'

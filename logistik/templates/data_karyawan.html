@@ -12,18 +12,28 @@
         <th>Agen</th>
         <th>Salary</th>
         <th>No HP</th>
+        <th>Kota</th>
+
     </thead>
 {% for karyawan in karyawans %}
     
         <tr>
             <td>{{ forloop.counter }}</td>
-            <td>{{ karyawan.id_karyawan }}</td>
-            <td>{{ karyawan.nama_karyawan }}</td>
+            <td>
+                <a href="/karyawan/detail/{{ karyawan.slug_karyawan }}">
+                {{ karyawan.id_karyawan }}
+                </a>
+            </td>
+            <td>
+                    {{ karyawan.nama_karyawan }}
+            </td>
             <td>{{ karyawan.jabatan }}</td>
             <td>{{ karyawan.branch_id }}</td>
             <td>{{ karyawan.agen_id }}</td>
             <td>{{ karyawan.salary }}</td>
             <td>{{ karyawan.no_hp_karyawan }}</td>
+            <td>{{ karyawan.kota_karyawan }}</td>
+
         </tr>
   
 {% endfor %}

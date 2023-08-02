@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path, re_path
-from logistik.views import cs, keuangan, laporan_harian, data_karyawan, cabang, updateCabang
+from logistik.views import cs, keuangan, laporan_harian, data_karyawan, cabang, detailCabang,detailKaryawan
 from django.conf.urls.static import static
 
 
@@ -12,5 +12,6 @@ urlpatterns = [
     path('cabang/', cabang),
     path('karyawan/', data_karyawan),
     path('', data_karyawan),
-    path('cabang/detail/<slug:slug_branch>/', updateCabang)
+    path('cabang/detail/<slug:slug_branch>/', detailCabang),
+    path('karyawan/detail/<slug:slug_karyawan>/', detailKaryawan)
 ]

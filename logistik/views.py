@@ -48,6 +48,16 @@ def data_karyawan(request):
     }
     return render(request, 'data_karyawan.html', konteks)
 
+def detailKaryawan(request,slug_karyawan):
+#    //query ambil data Karyawan
+    Karyawans = Karyawan.objects.get( slug_karyawan=slug_karyawan)
+    konteks = {
+        'title' : 'Detail Karyawan',
+        'headings' : 'Detail Karyawans',
+        'Karyawans' : Karyawans,
+    }
+    return  render(request, 'detail_karyawan.html', konteks)
+
 def cabang(request):
 #    //query ambil data Karyawan
     cabangs = Branch.objects.all()
@@ -60,9 +70,7 @@ def cabang(request):
     }
     return render(request, 'cabang.html', cabs)
 
-def updateCabang(request,slug_branch):
-#    //query ambil data Karyawan
-    # Cabangs = Branch.objects.get(Branch__slug = slug_branch)
+def detailCabang(request,slug_branch):
     Cabangs = Branch.objects.get( slug_branch=slug_branch)
     print(Cabangs)
     print(request)
@@ -72,5 +80,5 @@ def updateCabang(request,slug_branch):
         'Cabangs' : Cabangs,
     }
     return  render(request, 'detail_cabang.html', cabs)
-# 
+
 
