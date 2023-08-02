@@ -20,19 +20,19 @@ class Branch(models.Model):
   id_branch = models.CharField(max_length=10, blank=True, null=True)
   nama_branch = models.CharField(max_length=20)
   alamat_branch = models.TextField(max_length=100)
-  alamat_singkat_branch = models.CharField(max_length=20)
+  kota = models.CharField(max_length=20)
   no_telp_branch = models.CharField(max_length=20)
   slug_branch = models.SlugField(blank=True,editable=False)
 
 
   def save(self):
-    self.slug_branch = slugify(self.id_branch)
+    self.slug_branch = slugify(self.id)
     super(Branch, self).save()
-    
+
   def __str__(self):
     # template = '{0.nama_branch}'
-    return "{}. {}".format(self.id_branch, self.nama_branch)
-  
+    return self.nama_branch
+  # "{}. {}".format(self.id_branch, self.nama_branch)
   
   
 class Agen(models.Model):

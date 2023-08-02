@@ -10,17 +10,27 @@
         <th>Alamat Cabang</th>
         <th>Alamat Singkat</th>
         <th>No HP</th>
+        <!-- <th>slug</th> -->
 
     </thead>
 {% for cabang in cabangs %}
     
         <tr>
             <td>{{ forloop.counter }}</td>
-            <td>{{ cabang.id_branch }}</td>
-            <td>{{ cabang.nama_branch }}</td>
+            <td>
+                <a href="/">
+                    {{ cabang.id_branch }}
+                </a>
+            </td>
+            <td>
+                <a href="/cabang/detail/{{ cabang.slug_branch }}">
+                {{ cabang.nama_branch }}
+                </a>
+            </td>
             <td>{{ cabang.alamat_branch }}</td>
-            <td>{{ cabang.alamat_singkat_branch }}</td>
+            <td>{{ cabang.kota }}</td>
             <td>{{ cabang.no_telp_branch }}</td>
+            <!-- <td>{{ cabang.slug_branch }}</td> -->
         </tr>
   
 {% endfor %}

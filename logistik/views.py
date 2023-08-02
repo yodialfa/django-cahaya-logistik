@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Karyawan, Branch
 # from django.http import HttpResponse
 
@@ -59,4 +59,18 @@ def cabang(request):
 
     }
     return render(request, 'cabang.html', cabs)
+
+def updateCabang(request,slug_branch):
+#    //query ambil data Karyawan
+    # Cabangs = Branch.objects.get(Branch__slug = slug_branch)
+    Cabangs = Branch.objects.get( slug_branch=slug_branch)
+    print(Cabangs)
+    print(request)
+    cabs = {
+        'title' : 'Detail Cabang',
+        'headings' : 'Detail Cabang',
+        'Cabangs' : Cabangs,
+    }
+    return  render(request, 'detail_cabang.html', cabs)
+# 
 

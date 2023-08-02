@@ -6,6 +6,11 @@ class KaryawanAdmin(admin.ModelAdmin):
     search_fields = ['jabatan']
     list_filter = ['jabatan']
     list_per_page = 10
+   
+# class BranchAdmin(admin.ModelAdmin):
+#      readonly_fields = ['slug_branch',
+#                         'id_branch',
+#                         'nama_branch']
 
 admin.site.register(Branch)
 admin.site.register(Agen)
