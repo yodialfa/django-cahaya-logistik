@@ -1,5 +1,5 @@
-from django.shortcuts import render, get_object_or_404
-from .models import Karyawan, Branch
+from django.shortcuts import render
+from logistik.models import Karyawan, Branch
 # from django.http import HttpResponse
 
 def cs(request):
@@ -53,7 +53,7 @@ def detailKaryawan(request,slug_karyawan):
     Karyawans = Karyawan.objects.get( slug_karyawan=slug_karyawan)
     konteks = {
         'title' : 'Detail Karyawan',
-        'headings' : 'Detail Karyawans',
+        'headings' : 'Detail Karyawan',
         'Karyawans' : Karyawans,
     }
     return  render(request, 'detail_karyawan.html', konteks)

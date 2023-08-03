@@ -1,17 +1,11 @@
 from django.contrib import admin
-from django.urls import path, re_path
-from logistik.views import cs, keuangan, laporan_harian, data_karyawan, cabang, detailCabang,detailKaryawan
-from django.conf.urls.static import static
+from django.urls import path, include
+from . import views
+# from django.conf.urls.static import static
 
 
 urlpatterns = [
     path('admin/',admin.site.urls),
-    path('cs/', cs),
-    path('keuangan/', keuangan),
-    path('laporan_harian/', laporan_harian),
-    path('cabang/', cabang),
-    path('karyawan/', data_karyawan),
-    path('', data_karyawan),
-    path('cabang/detail/<slug:slug_branch>/', detailCabang),
-    path('karyawan/detail/<slug:slug_karyawan>/', detailKaryawan)
+    path('', views.login, name="login"),
+    path('logistik/',include(('logistik.urls', 'logistik'),  namespace='logistik'))
 ]
