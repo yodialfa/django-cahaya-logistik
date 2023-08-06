@@ -1,29 +1,30 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     {% include 'head.html' %}
+
 </head>
 <body>
-    <div id="main-wrapper">
+    <!-- <div class="min-h-screen flex flex-row bg-gray-100"></div> -->
+
+        {% include 'header.html' %}
         <!-- sidebar -->
 
         {% include 'sidebar.html' %}
-    
+        
         <!-- /#sidebar -->
-        
-        <!-- navbar -->
-            {% include 'header.html' %}
-        <!-- endnavbar -->
-        
-        <div id="main-content" class="container">
+        <div class="container px-6">
             <br>
-            <center>
-                <h3>{{ title }}</h3>
-            </center>
+            <h2 class="text-1xl font-bold">{{ title }}</h2>
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg mx-4"> 
             
-            {% block content %}
-            {% endblock %}
+                {% block content %}
+                {% endblock %}
+  
+            </div>
         </div>
+  
     </div>
      <!-- Bootstrap core JavaScript -->
      {% include 'filejs.html' %}

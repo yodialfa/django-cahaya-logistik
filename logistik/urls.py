@@ -9,7 +9,7 @@ urlpatterns = [
     path('cs/', cs, name="cs"),
     path('keuangan/', keuangan, name="keuangan"),
     path('laporan_harian/', laporan_harian, name="laporan_harian"),
-    path('cabang/', cabang,name="cabang"),
+    path('cabang/', cabang, name="cabang"),
     path('karyawan/', data_karyawan, name="karyawan"),
     # path('', data_karyawan),
     path('cabang/detail/<slug:slug_branch>/', detailCabang,name="detail_cabang"),
