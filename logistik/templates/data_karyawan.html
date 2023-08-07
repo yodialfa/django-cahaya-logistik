@@ -2,43 +2,55 @@
 
 {% block content %}
 <br>
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg"">
-<table class="w-full text-sm text-left dark:text-black dark:text-gray-400">
-    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-        <th scope="col" class="px-6 py-3">No</th>
-        <th scope="col" class="px-6 py-3">ID Karyawan</th>
-        <th scope="col" class="px-6 py-3">Nama</th>
-        <th scope="col" class="px-6 py-3">Jabatan</th>
-        <th scope="col" class="px-6 py-3">Cabang</th>
-        <th scope="col" class="px-6 py-3">Agen</th>
-        <th scope="col" class="px-6 py-3">Salary</th>
-        <th scope="col" class="px-6 py-3">No HP</th>
-        <th scope="col" class="px-6 py-3">Kota</th>
-
+<button>
+    <a href="{% url "logistik:tambah_karyawan" %}">
+    Tambah Karyawan
+    </a>
+</button>
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3 text-center">No</th>
+                <th scope="col" class="px-6 py-3 text-center">ID Karyawan</th>
+                <th scope="col" class="px-6 py-3 text-center">Nama</th>
+                <th scope="col" class="px-6 py-3 text-center">Jabatan</th>
+                <th scope="col" class="px-6 py-3 text-center">Cabang</th>
+                <th scope="col" class="px-6 py-3 text-center">Agen</th>
+                <th scope="col" class="px-6 py-3 text-center">Salary</th>
+                <th scope="col" class="px-6 py-3 text-center">No HP</th>
+                <th scope="col" class="px-6 py-3 text-center">Kota</th>
+            </tr>
     </thead>
 {% for karyawan in karyawans %}
-    
-        <tr class="border-b bg-gray-50 dark:bg-gray-200 dark:border-gray-700">
-            <td scope="col" class="px-6 py-3">{{ forloop.counter }}</td>
-            <td scope="col" class="px-6 py-3">
-                <a href="/logistik/karyawan/detail/{{ karyawan.slug_karyawan }}">
-                    {{ karyawan.id_karyawan }}
-                </a>
-            </td>
-            <td scope="col" class="px-6 py-3">
-                    {{ karyawan.nama_karyawan }}
-            </td>
-            <td scope="col" class="px-6 py-3">{{ karyawan.jabatan }}</td>
-            <td scope="col" class="px-6 py-3">{{ karyawan.branch_id }}</td>
-            <td scope="col" class="px-6 py-3">{{ karyawan.agen_id }}</td>
-            <td scope="col" class="px-6 py-3">{{ karyawan.salary }}</td>
-            <td scope="col" class="px-6 py-3">{{ karyawan.no_hp_karyawan }}</td>
-            <td scope="col" class="px-6 py-3">{{ karyawan.kota_karyawan }}</td>
-
-        </tr>
+    <tbody>
+        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                {{ forloop.counter }}
+            </th>
+                <td scope="col" class="px-6 py-3">
+                    <a href="/logistik/karyawan/detail/{{ karyawan.slug_karyawan }}">
+                        {{ karyawan.id_karyawan }}
+                    </a>
+                </td>
+                <td scope="col" class="px-6 py-3">
+                    <a href="/logistik/karyawan/detail/{{ karyawan.slug_karyawan }}">
+                        {{ karyawan.nama_karyawan }}
+                    </a> 
+                </td>
+                <td scope="col" class="px-3 py-3">{{ karyawan.jabatan }}</td>
+                <td scope="col" class="px-3 py-3">{{ karyawan.branch_id }}</td>
+                <td scope="col" class="px-6 py-3">{{ karyawan.agen_id }}</td>
+                <td scope="col" class="px-6 py-3">{{ karyawan.salary }}</td>
+                <td scope="col" class="px-6 py-3">{{ karyawan.no_hp_karyawan }}</td>
+                <td scope="col" class="px-6 py-3">{{ karyawan.kota_karyawan }}</td>
+         </tr>
+    </tbody>
+        
   
 {% endfor %}
 
 </table>
 </div>
+
 {% endblock %}

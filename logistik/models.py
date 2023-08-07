@@ -65,6 +65,9 @@ class Karyawan(models.Model):
     self.slug_karyawan = slugify(self.id)
     super(Karyawan, self).save()
 
+  def kar_id(self):
+    return self.id
+
   def __str__(self):
     # template = '{0.nama_karyawan}'
     return self.nama_karyawan

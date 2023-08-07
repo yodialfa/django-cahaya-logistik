@@ -13,5 +13,8 @@ urlpatterns = [
     path('karyawan/', data_karyawan, name="karyawan"),
     # path('', data_karyawan),
     path('cabang/detail/<slug:slug_branch>/', detailCabang,name="detail_cabang"),
-    path('karyawan/detail/<slug:slug_karyawan>/', detailKaryawan, name="detail_karyawan")
+    path('karyawan/detail/<slug:slug_karyawan>/', detailKaryawan, name="detail_karyawan"),
+    path('karyawan/tambah_karyawan/', tambah_karyawan, name="tambah_karyawan"),
+    path('temp/', temp, name="temp")
+
 ]

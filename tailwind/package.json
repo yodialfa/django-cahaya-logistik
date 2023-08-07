@@ -4,9 +4,11 @@
     "postcss": "^8.4.27",
     "tailwindcss": "^3.3.3"
   },
-  "scripts":{
-    "dev" : "npx tailwindcss -i ../static/css/tailwind.css -o ../static/css/style.css --watch",
-    "build" : "npx tailwindcss -i ../static/css/tailwind.css -o ../static/css/style.css"
-
+  "scripts": {
+    "dev": "npx tailwindcss -i ../static/css/tailwind.css -o ../static/css/style.css --watch",
+    "build": "npx tailwindcss -i ../static/css/tailwind.css -o ../static/css/style.css"
+  },
+  "dependencies": {
+    "flowbite": "^1.8.1"
   }
 }

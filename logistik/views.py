@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from logistik.models import Karyawan, Branch
+from . import forms
+
 # from django.http import HttpResponse
 
 def cs(request):
@@ -27,6 +29,7 @@ def laporan_harian(request):
     total_ongkir = 10000
     konteks = {
         'title' : 'Laporan Harian',
+        'heading' : 'Laporan Harian',
         'no' : no,
         'no_resi' : no_resi,
         'nama_pengirim' : nama_pengirim,
@@ -36,10 +39,11 @@ def laporan_harian(request):
     }
     return render(request, 'laporan_harian.html', konteks)
 
+
+
 def data_karyawan(request):
 #    //query ambil data Karyawan
     karyawans = Karyawan.objects.all()
-    print(karyawans)
     konteks = {
         'title' : 'Data Karyawan',
         'headings' : 'Data Karyawan',
@@ -52,16 +56,18 @@ def detailKaryawan(request,slug_karyawan):
 #    //query ambil data Karyawan
     Karyawans = Karyawan.objects.get( slug_karyawan=slug_karyawan)
     konteks = {
-        'title' : 'Detail Karyawan',
+        'title' : 'Data Karyawan',
         'headings' : 'Detail Karyawan',
         'Karyawans' : Karyawans,
     }
     return  render(request, 'detail_karyawan.html', konteks)
 
+
+
+
 def cabang(request):
-#    //query ambil data Karyawan
+#    
     cabangs = Branch.objects.all()
-    print(cabangs)
     cabs = {
         'title' : 'Data Cabang',
         'headings' : 'Data Cabang',
@@ -72,13 +78,26 @@ def cabang(request):
 
 def detailCabang(request,slug_branch):
     Cabangs = Branch.objects.get( slug_branch=slug_branch)
-    print(Cabangs)
-    print(request)
     cabs = {
-        'title' : 'Detail Cabang',
+        'title' : 'Data Cabang',
         'headings' : 'Detail Cabang',
         'Cabangs' : Cabangs,
     }
     return  render(request, 'detail_cabang.html', cabs)
+
+def temp(request):
+    return  render(request, 'temp.html')
+
+def tambah_karyawan(request):
+    formTambahKaryawan = forms.karyawanMain()
+    konteks = {
+        'title' : 'Data Karyawan',
+        'headings' : 'Tambah Data Karyawan',
+        'karyawan_form' : formTambahKaryawan,
+
+    }
+    return  render(request, 'form_tambah_karyawan.html',konteks)
+
+
 
 
