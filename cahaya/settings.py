@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     #add installed app
     'logistik',
     'tailwind',
+    'autoslug',
     # "django_browser_reload",
 ]
 
@@ -152,3 +153,6 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # COMPRESS_ENABLED = True
 
 # STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
+DATE_INPUT_FORMATS = ['%d-%m-%Y']
+DATE_FORMAT = 'd-m-Y'
+TIME_FORMAT = 'H:i:s'

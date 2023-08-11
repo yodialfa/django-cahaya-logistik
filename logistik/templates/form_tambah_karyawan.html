@@ -2,7 +2,7 @@
 
 {% block content %}
 <br>
-<form action="POST">
+<form method="POST">
     {% csrf_token %}
     <table>
         {{ karyawan_form.as_table }}

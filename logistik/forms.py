@@ -1,25 +1,41 @@
 from django.forms import ModelForm
-from logistik.models import Karyawan, Branch
+from logistik.models import Karyawan
 from django import forms
+from django.utils.text import slugify
+from django.db.models import Max
 
-class karyawanMain(forms.Form):
-    # jabatan_choices = Karyawan.objects.all().distinct()
-    # branch_choices = Karyawan.objects.all().distinct()
-    # agent_choices = Karyawan.objects.all().distinct()
+class karyawanForms(forms.ModelForm):
+    class Meta:
+        model = Karyawan
+        fields = [
+            # 'id_karyawan',
+            'nama_karyawan',
+            'jabatan',
+            'salary',
+            'alamat_karyawan',
+            # 'ttl_karyawan',
+            'no_hp_karyawan',
+            'branch_id',
+            'agen_id',
+            'kota_karyawan',
+            # 'tanggal_masuk',
+
+        ]
+
+    
+
+    # def save(self, *args, **kwargs):  # new
+    # if not self.slug_karyawan:
+    #   self.slug_karyawan = slugify(self.id)
+    #   super(Karyawan, self).save(*args, **kwargs)
 
 
-    id_karyawan = forms.CharField()
-    nama_karyawan = forms.CharField()
-    jabatan = forms.ChoiceField()
-    salary = forms.IntegerField()
-    alamat_karyawan = forms.CharField()
-    no_hp_karyawan = forms.CharField()
-    branch_id = forms.ChoiceField(choices=[('a','a'),('b','b'),('c','c')])
-    agen_id = forms.ChoiceField(choices=[('a','a'),('b','b'),('c','c')])
-    kota_karyawan = forms.ChoiceField()
-    slug_karyawan = forms.IntegerField()
-
-
+    # def save(self, commit=True):
+    #     instance = super(karyawanForms, self).save(commit=False)
+    #     instance.slug_karyawan = str(instance.id)
+    #     if commit:
+    #         instance.save()
+    #     return instance
 
 
 class cabangMain(forms.Form):

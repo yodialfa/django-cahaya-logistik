@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
+from autoslug import AutoSlugField
 
 
 class Customer(models.Model):
@@ -17,7 +18,7 @@ class Customer(models.Model):
     
 
 class Branch(models.Model):
-  id_branch = models.CharField(max_length=10, blank=True, null=True)
+  id_branch = models.CharField(max_length=10,null=False,)
   nama_branch = models.CharField(max_length=20)
   alamat_branch = models.TextField(max_length=100)
   kota = models.CharField(max_length=20)
@@ -25,9 +26,13 @@ class Branch(models.Model):
   slug_branch = models.SlugField(blank=True,editable=False)
 
 
-  def save(self):
-    self.slug_branch = slugify(self.id_branch)
-    super(Branch, self).save()
+  def br_id(self):
+    return self.nama_branch
+
+
+  # def save(self):
+  #   self.slug_branch = slugify(self.id_branch)
+  #   super(Branch, self).save()
 
   def __str__(self):
     # template = '{0.nama_branch}'
@@ -36,12 +41,13 @@ class Branch(models.Model):
   
   
 class Agen(models.Model):
-  id_agen = models.CharField(max_length=10,blank=True, null=True)
+  id_agen = models.CharField(max_length=10,null=False)
   nama_agen = models.CharField(max_length=20)
   alamat_agen = models.TextField(max_length=100)
   alamat_singkat_agen = models.CharField(max_length=20)
   no_telp_agen = models.CharField(max_length=20)
-  branch_id = models.ForeignKey(Branch, on_delete=models.CASCADE, null=True )
+  branch_id = models.ForeignKey(Branch, on_delete=models.CASCADE, null=True)
+
 
   def __str__(self):
     # template = '{0.nama_agen}'
@@ -50,20 +56,51 @@ class Agen(models.Model):
 
 
 class Karyawan(models.Model):
-  id_karyawan = models.CharField(max_length=10, blank=True,null=True)
+  id_karyawan = models.CharField(max_length=20, blank=True,null=True)
   nama_karyawan = models.CharField(max_length=50)
   jabatan = models.CharField(max_length=15)
-  branch_id = models.ForeignKey(Branch, on_delete = models.CASCADE,null=True)
-  agen_id = models.ForeignKey(Agen, on_delete = models.CASCADE,null=True)
+  branch_id = models.ForeignKey(Branch, on_delete = models.CASCADE,blank=True, null=True)
+  agen_id = models.ForeignKey(Agen, on_delete = models.CASCADE, blank=True, null=True)
   salary = models.IntegerField()
   alamat_karyawan = models.TextField()
+  tanggal_masuk = models.DateField(null=True)
   kota_karyawan = models.CharField(max_length=30, null=True)
+  ttl_karyawan = models.DateField(null=True)
+  tanggal_resign = models.DateField(null=True,blank=True)
   no_hp_karyawan = models.CharField(max_length=15)
-  slug_karyawan = models.SlugField(blank=True, editable=False)
+  slug_karyawan = AutoSlugField(populate_from='id_karyawan')
 
-  def save(self):
-    self.slug_karyawan = slugify(self.id)
+  # def save(self, *args, **kwargs):
+  #   super(Karyawan, self).save()
+  #   if not self.id_karyawan:
+  #     if self.branch_id:
+  #       branch = Branch.objects.get(name=self.branch_id)
+  #       self.branch_id = branch.id_branch
+  #       self.id_karyawan = str(self.branch_id) + str(self.id)
+  #       self.slug_karyawan = self.id_karyawan
+  #   super(Karyawan,self).save(*args, **kwargs)
+
+  def save(self, *args, **kwargs):
     super(Karyawan, self).save()
+    if not self.id_karyawan:
+      if self.branch_id:
+        # Access the related Branch object
+        related_branch = self.branch_id
+
+        # Access the id_branch field of the related Branch
+        self.id_karyawan = str(related_branch.id_branch) + str(self.id)
+        self.slug_karyawan = self.id_karyawan
+
+    super(Karyawan, self).save(*args, **kwargs)
+
+  # def save(self, *args, **kwargs):
+  #   if not self.slug_karyawan:
+  #       self.slug_karyawan = str(self.id)
+  #   super().save(*args, **kwargs)
+  # def get_absolute_url(self):
+  #   return reverse ("karyawan",kwargs={'slug_karyawan':self.slug_karyawan})
+  
+  
 
   def kar_id(self):
     return self.id
@@ -85,11 +122,13 @@ class Harga(models.Model):
   price_wing = models.IntegerField()
   price_towing = models.IntegerField()
   price_udara = models.IntegerField()
+  price_bl = models.IntegerField()
   estimasi_darat = models.IntegerField()
   estimasi_udara = models.IntegerField()
 
+
   def __str__(self):
-    return self.asal
+    return "{}. {}".format(self.asal, self.tujuan_coveran)
 
 
 # class Transaksi(models.Model):

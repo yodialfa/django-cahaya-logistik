@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from logistik.models import Karyawan, Branch
-from . import forms
+from .forms import *
 
 # from django.http import HttpResponse
 
@@ -88,15 +88,31 @@ def detailCabang(request,slug_branch):
 def temp(request):
     return  render(request, 'temp.html')
 
-def tambah_karyawan(request):
-    formTambahKaryawan = forms.karyawanMain()
-    konteks = {
-        'title' : 'Data Karyawan',
-        'headings' : 'Tambah Data Karyawan',
-        'karyawan_form' : formTambahKaryawan,
+# def tambah_karyawan(request):
+#     formTambahKaryawan = forms.karyawanMain()
+#     konteks = {
+#         'title' : 'Data Karyawan',
+#         'headings' : 'Tambah Data Karyawan',
+#         'karyawan_form' : formTambahKaryawan,
 
+#     }
+#     return  render(request, 'form_tambah_karyawan.html',konteks)
+
+
+def tambah_karyawan(request):
+    karyawan_form = karyawanForms(request.POST or None)
+    if request.method == 'POST':
+        if karyawan_form.is_valid():
+            karyawan_form.save()
+            return redirect('logistik:karyawan')
+        else:
+            karyawan_form = KaryawanForm()
+
+    context = {
+        'page_title': 'create post',
+        'karyawan_form': karyawan_form
     }
-    return  render(request, 'form_tambah_karyawan.html',konteks)
+    return render(request, 'form_tambah_karyawan.html', context)
 
 
 
