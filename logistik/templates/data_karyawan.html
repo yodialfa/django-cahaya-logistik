@@ -1,49 +1,182 @@
 {% extends 'base.html' %}
+{% load custom_filters %}
 
 {% block content %}
 <br>
-<button>
+<!-- 
+<button type="submit">
     <a href="{% url "logistik:tambah_karyawan" %}">
     Tambah Karyawan
     </a>
+</button> -->
+<!-- Modal toggle -->
+<button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" class="block text-white bg-slate-700 hover:bg-slate-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-slate-500 dark:hover:bg-slate-700 dark:focus:ring-blue-800 w-full mx-auto" type="button">
+Tambah Karyawan
 </button>
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+<br>
+{% for msg in messages %}
+<div class="bg-green-100 border border-green-200 text-black px-4 py-3 rounded relative text-center" role="alert">
+<strong class="font-bold">Messages :</strong>
+<span class="block sm:inline">{{ msg }}</span>
+<!-- <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
+    <svg class="fill-current h-6 w-6 text-red-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
+</span> -->
+</div>
+{% endfor %}
+
+
+<!-- modal form -->
+<div id="authentication-modal"  aria-hidden="true" class="fixed mx-auto top-0 left-0 right-0 z-50 hidden  max-h-fit  w-1/2 p-2">
+    <div class="w-full">
+        
+        <div class=" bg-gray-500 rounded-lg shadow dark:bg-gray-700 w-full">
+            <button type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="authentication-modal">
+                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                </svg>
+                <span class="sr-only">Close modal</span>
+            </button>
+            <div class="bg-slate-700 dark:bg-gray-700 px-5 py-4 border-2 border-gray-200 border-dashed rounded-lg w-full">
+                <div class="mx-auto">
+                    <h3 class="mb-4 text-xl font-medium text-center text-white dark:text-white">Tambah Karyawan</h3>
+                </div>
+                
+                <div class=" border-2 px-5 py-4 border-gray-200 border-dashed rounded-lg  overflow-y-scroll max-h-[500px]">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <table>
+                            <div class="mb-3">
+                                <label for="username-success" class="block mb-2 text-sm font-medium text-white dark:text-white">{{ karyawan_form.nama_karyawan.label }}</label>
+                            
+                                {{ karyawan_form.nama_karyawan }}
+                            </div>
+                            <div class="mb-3">
+                                <label for="username-success" class="block mb-2 text-sm font-medium text-white dark:text-white">{{ karyawan_form.jabatan.label }}</label>
+                                
+                                {{ karyawan_form.jabatan }}
+                            </div>
+                            <div class="mb-6">
+                                <label for="username-success" class="block mb-2 text-sm font-medium text-white dark:text-white">{{ karyawan_form.salary.label }}</label>
+                                
+                                {{ karyawan_form.salary }}
+                            </div>
+                            <div class="mb-6">
+                                <label for="username-success" class="block mb-2 text-sm font-medium text-white dark:text-white">{{ karyawan_form.alamat_karyawan.label }}</label>
+                               
+                                {{ karyawan_form.alamat_karyawan }}
+                            </div>
+                            <div class="mb-6">
+                                <label for="username-success" class="block mb-2 text-sm font-medium text-white dark:text-white">{{ karyawan_form.ttl_karyawan.label }}</label>
+                    
+                                {{ karyawan_form.ttl_karyawan }}
+                            </div>
+                            <div class="mb-6">
+                                <label for="username-success" class="block mb-2 text-sm font-medium text-white dark:text-white">{{ karyawan_form.no_hp_karyawan.label }}</label>
+                    
+                                {{ karyawan_form.no_hp_karyawan }}
+                            </div>
+                            <div class="mb-6">
+                                <label for="username-success" class="block mb-2 text-sm font-medium text-white dark:text-white">{{ karyawan_form.branch_id.label }}</label>
+                    
+                                {{ karyawan_form.branch_id }}
+                            </div>
+                            <div class="mb-6">
+                                <label for="username-success" class="block mb-2 text-sm font-medium text-white dark:text-white">{{ karyawan_form.agen_id.label }}</label>
+                    
+                                {{ karyawan_form.agen_id }}
+                            </div>
+                            <div class="mb-6">
+                                <label for="username-success" class="block mb-2 text-sm font-medium text-white dark:text-white">{{ karyawan_form.kota_karyawan.label }}</label>
+                    
+                                {{ karyawan_form.kota_karyawan }}
+                            </div>
+                            <!-- <div class="mb-6">
+                                <label for="username-success" class="block mb-2 text-sm font-medium text-white dark:text-white">{{ karyawan_form.tanggal_masuk.label }}</label>
+                                <input type="text" id="username-success" class="bg-green-50 border border-green-500 text-green-900 placeholder-green-700 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-green-100 dark:border-green-400" placeholder="Bonnie Green">
+                    
+                                {{ karyawan_form.tanggal_masuk }} -->
+                            </div>
+                    
+                        </table>
+                        
+                </div>
+                <br>
+                <div class="flex justify-between">
+    
+                    <div>
+                        <!-- Content on the left side -->
+                        
+                    </div>
+                    <div>
+                        <!-- Button on the right side -->
+                        <button type="button" class="bg-rose-700 hover:bg-red-300 text-white font-bold py-2 px-4 rounded" data-modal-hide="authentication-modal">Cancel</button>
+                        <button id="submit-button" type="Submit" class="bg-blue-700 hover:bg-blue-300 text-white font-bold py-2 px-4 rounded">Kirim</button>
+                    </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+    
+</div>
+<!-- endmodal form -->
+<!-- <div id="success-modal" class="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-gray-800 bg-opacity-50 hidden">
+    <div class="bg-white p-4 rounded-lg shadow-lg">
+        <div class="mb-4">
+            <h2 class="text-lg font-semibold text-green-500">Success!</h2>
+            <p>Your input was successful.</p>
+        </div>
+        <button id="close-modal" class="px-3 py-2 bg-green-500 text-white rounded-lg">Close</button>
+    </div>
+</div> -->
+<!-- succes modals -->
+
+
+
+
+<div class="relative shadow-md sm:rounded-lg">
+
+    
+
     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-                <th scope="col" class="px-6 py-3 text-center">No</th>
-                <th scope="col" class="px-6 py-3 text-center">ID Karyawan</th>
-                <th scope="col" class="px-6 py-3 text-center">Nama</th>
-                <th scope="col" class="px-6 py-3 text-center">Jabatan</th>
-                <th scope="col" class="px-6 py-3 text-center">Cabang</th>
-                <th scope="col" class="px-6 py-3 text-center">Agen</th>
-                <th scope="col" class="px-6 py-3 text-center">Salary</th>
-                <th scope="col" class="px-6 py-3 text-center">No HP</th>
-                <th scope="col" class="px-6 py-3 text-center">Kota</th>
+                <th scope="col" class="px-2 py-2 text-center">No</th>
+                <th scope="col" class="px-2 py-2 text-center">ID Karyawan</th>
+                <th scope="col" class="px-2 py-2 text-center">Nama</th>
+                <th scope="col" class="px-2 py-2 text-center">Jabatan</th>
+                <th scope="col" class="px-2 py-2 text-center">Cabang</th>
+                <th scope="col" class="px-2 py-2 text-center">Agen</th>
+                <th scope="col" class="px-2 py-2 text-center">Salary</th>
+                <th scope="col" class="px-2 py-2 text-center">No HP</th>
+                <th scope="col" class="px-2 py-2 text-center">Kota</th>
             </tr>
     </thead>
-{% for karyawan in karyawans %}
+{% for karyawan in page.object_list %}
     <tbody>
         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                {{ forloop.counter }}
+            <th scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                {{ forloop.counter|calculate_counter:page.number }}
+        </th>
             </th>
-                <td scope="col" class="px-6 py-3">
+                <td scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     <a href="/logistik/karyawan/detail/{{ karyawan.slug_karyawan }}">
                         {{ karyawan.id_karyawan }}
                     </a>
                 </td>
-                <td scope="col" class="px-6 py-3">
+                <td scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     <a href="/logistik/karyawan/detail/{{ karyawan.slug_karyawan }}">
                         {{ karyawan.nama_karyawan }}
                     </a> 
                 </td>
-                <td scope="col" class="px-3 py-3">{{ karyawan.jabatan }}</td>
-                <td scope="col" class="px-3 py-3">{{ karyawan.branch_id }}</td>
-                <td scope="col" class="px-6 py-3">{{ karyawan.agen_id }}</td>
-                <td scope="col" class="px-6 py-3">{{ karyawan.salary }}</td>
-                <td scope="col" class="px-6 py-3">{{ karyawan.no_hp_karyawan }}</td>
-                <td scope="col" class="px-6 py-3">{{ karyawan.kota_karyawan }}</td>
+                <td scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ karyawan.jabatan }}</td>
+                <td scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ karyawan.branch_id }}</td>
+                <td scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ karyawan.agen_id }}</td>
+                <td scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ karyawan.salary }}</td>
+                <td scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ karyawan.no_hp_karyawan }}</td>
+                <td scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ karyawan.kota_karyawan }}</td>
          </tr>
     </tbody>
         
@@ -52,5 +185,39 @@
 
 </table>
 </div>
+
+<script>
+    // Open the modal
+    document.getElementById("openModalButton").addEventListener("click", function() {
+        document.getElementById("myModal").classList.remove("hidden");
+    });
+
+    // Close the modal
+    document.getElementById("closeModalButton").addEventListener("click", function() {
+        document.getElementById("myModal").classList.add("hidden");
+    });
+
+
+    // const successModal = document.getElementById('success-modal');
+    // const closeModalBtn = document.getElementById('close-modal');
+
+    // // Function to show modal
+    // function showSuccessModal() {
+    //     successModal.classList.remove('hidden');
+    // }
+
+    // // Function to hide modal
+    // function hideSuccessModal() {
+    //     successModal.classList.add('hidden');
+    // }
+
+    // // Event listener to show modal
+    // // Call this function when a successful input occurs
+    // showSuccessModal();
+
+    // // Event listener to hide modal when close button is clicked
+    // closeModalBtn.addEventListener('click', hideSuccessModal);
+
+</script>
 
 {% endblock %}

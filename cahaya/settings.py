@@ -37,8 +37,14 @@ INSTALLED_APPS = [
     'logistik',
     'tailwind',
     'autoslug',
+    'crispy_forms',
+    'crispy_bootstrap5',
     # "django_browser_reload",
 ]
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+
+CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -153,6 +159,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # COMPRESS_ENABLED = True
 
 # STATICFILES_FINDERS = ('compressor.finders.CompressorFinder',)
-DATE_INPUT_FORMATS = ['%d-%m-%Y']
+DATE_INPUT_FORMATS = ['%Y-%m-%d']
 DATE_FORMAT = 'd-m-Y'
 TIME_FORMAT = 'H:i:s'
+

@@ -2,35 +2,39 @@
 
 {% block content %}
 <br>
-<table class="border-collapse border border-slate-500">
-    <thead class="thead-dark">
-        <th>No</th>
-        <th>ID Cabang</th>
-        <th>Nama Cabang</th>
-        <th>Alamat Cabang</th>
-        <th>Kota/ Kab.</th>
-        <th>No HP</th>
-        <!-- <th>slug</th> -->
+<table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <tr>
+            <th scope="col" class="px-2 py-2 text-center">No</th>
+            <th scope="col" class="px-2 py-2 text-center">ID Cabang</th>
+            <th scope="col" class="px-2 py-2 text-center">Nama Cabang</th>
+            <th scope="col" class="px-2 py-2 text-center">Alamat Cabang</th>
+            <th scope="col" class="px-2 py-2 text-center">Kota/ Kab.</th>
+            <th scope="col" class="px-2 py-2 text-center">No HP</th>
+            <!-- <th>slug</th> -->
+        </tr>
 
     </thead>
 {% for cabang in cabangs %}
-    
-        <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>
+    <tbody>
+        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+            <td scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                {{ forloop.counter }}
+            </td>
+            <td scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 <a href="{% url "logistik:detail_cabang" slug_branch=cabang.slug_branch %}">
  
                     {{ cabang.id_branch }}
                 </a>
             </td>
-            <td>{{ cabang.nama_branch }}
+            <td scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ cabang.nama_branch }}
             </td>
-            <td>{{ cabang.alamat_branch }}</td>
-            <td>{{ cabang.kota }}</td>
-            <td>{{ cabang.no_telp_branch }}</td>
+            <td scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ cabang.alamat_branch }}</td>
+            <td scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ cabang.kota }}</td>
+            <td scope="row" class="px-2 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ cabang.no_telp_branch }}</td>
             <!-- <td>{{ cabang.slug_branch }}</td> -->
         </tr>
-  
+    </tbody>
 {% endfor %}
 
 </table>

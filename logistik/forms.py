@@ -13,14 +13,23 @@ class karyawanForms(forms.ModelForm):
             'jabatan',
             'salary',
             'alamat_karyawan',
-            # 'ttl_karyawan',
+            'ttl_karyawan',
             'no_hp_karyawan',
             'branch_id',
             'agen_id',
             'kota_karyawan',
             # 'tanggal_masuk',
-
         ]
+        widgets = {
+            'nama_karyawan': forms.TextInput(attrs={'class': 'border rounded p-2 w-full'}),
+            'jabatan': forms.TextInput(attrs={'class': 'border rounded p-2 w-full'}),
+            'salary': forms.NumberInput(attrs={'class': 'border rounded p-2 w-full'}),
+            'alamat_karyawan': forms.Textarea(attrs={'class': 'border rounded p-2 w-full h-[15px]'}),
+            'ttl_karyawan' : forms.DateInput(attrs={'type': 'date'}),
+            'no_hp_karyawan' :forms.NumberInput(attrs={'class' : "bg-green-50 border border-green-500 text-green-900 placeholder-green-700 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5" }),
+
+        }
+   
 
     
 

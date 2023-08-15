@@ -70,16 +70,6 @@ class Karyawan(models.Model):
   no_hp_karyawan = models.CharField(max_length=15)
   slug_karyawan = AutoSlugField(populate_from='id_karyawan')
 
-  # def save(self, *args, **kwargs):
-  #   super(Karyawan, self).save()
-  #   if not self.id_karyawan:
-  #     if self.branch_id:
-  #       branch = Branch.objects.get(name=self.branch_id)
-  #       self.branch_id = branch.id_branch
-  #       self.id_karyawan = str(self.branch_id) + str(self.id)
-  #       self.slug_karyawan = self.id_karyawan
-  #   super(Karyawan,self).save(*args, **kwargs)
-
   def save(self, *args, **kwargs):
     super(Karyawan, self).save()
     if not self.id_karyawan:

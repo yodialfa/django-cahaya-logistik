@@ -1,11 +1,72 @@
 {% extends 'base.html' %}
-
+<!-- {% load crispy_forms_tags %} -->
 {% block content %}
 <br>
 <form method="POST">
     {% csrf_token %}
+    <!-- {{ karyawan_form|crispy }} -->
     <table>
-        {{ karyawan_form.as_table }}
+        <div class="mb-3">
+            <label for="username-success" class="block mb-2 text-sm font-medium text-green-700 dark:text-green-500">{{ karyawan_form.nama_karyawan.label }}</label>
+            <input type="text" id="username-success" class="bg-green-50 border border-green-500 text-green-900 placeholder-green-700 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-green-100 dark:border-green-400" placeholder="Bonnie Green">
+
+            {{ karyawan_form.nama_karyawan }}
+        </div>
+        <div class="mb-3">
+            <label for="username-success" class="block mb-2 text-sm font-medium text-green-700 dark:text-green-500">{{ karyawan_form.jabatan.label }}</label>
+            <input type="text" id="username-success" class="bg-green-50 border border-green-500 text-green-900 placeholder-green-700 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-green-100 dark:border-green-400" placeholder="Bonnie Green">
+
+            {{ karyawan_form.jabatan }}
+        </div>
+        <div class="mb-6">
+            <label for="username-success" class="block mb-2 text-sm font-medium text-green-700 dark:text-green-500">{{ karyawan_form.salary.label }}</label>
+            <input type="text" id="username-success" class="bg-green-50 border border-green-500 text-green-900 placeholder-green-700 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-green-100 dark:border-green-400" placeholder="Bonnie Green">
+
+            {{ karyawan_form.salary }}
+        </div>
+        <div class="mb-6">
+            <label for="username-success" class="block mb-2 text-sm font-medium text-green-700 dark:text-green-500">{{ karyawan_form.alamat_karyawan.label }}</label>
+            <input type="text" id="username-success" class="bg-green-50 border border-green-500 text-green-900 placeholder-green-700 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-green-100 dark:border-green-400" placeholder="Bonnie Green">
+
+            {{ karyawan_form.alamat_karyawan }}
+        </div>
+        <!-- <div class="mb-6">
+            <label for="username-success" class="block mb-2 text-sm font-medium text-green-700 dark:text-green-500">{{ karyawan_form.ttl_karyawan.label }}</label>
+            <input type="text" id="username-success" class="bg-green-50 border border-green-500 text-green-900 placeholder-green-700 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-green-100 dark:border-green-400" placeholder="Bonnie Green">
+
+            {{ karyawan_form.ttl_karyawan }}
+        </div> -->
+        <div class="mb-6">
+            <label for="username-success" class="block mb-2 text-sm font-medium text-green-700 dark:text-green-500">{{ karyawan_form.no_hp_karyawan.label }}</label>
+            <input type="text" id="username-success" class="bg-green-50 border border-green-500 text-green-900 placeholder-green-700 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-green-100 dark:border-green-400" placeholder="Bonnie Green">
+
+            {{ karyawan_form.no_hp_karyawan }}
+        </div>
+        <div class="mb-6">
+            <label for="username-success" class="block mb-2 text-sm font-medium text-green-700 dark:text-green-500">{{ karyawan_form.branch_id.label }}</label>
+            <input type="text" id="username-success" class="bg-green-50 border border-green-500 text-green-900 placeholder-green-700 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-green-100 dark:border-green-400" placeholder="Bonnie Green">
+
+            {{ karyawan_form.branch_id }}
+        </div>
+        <div class="mb-6">
+            <label for="username-success" class="block mb-2 text-sm font-medium text-green-700 dark:text-green-500">{{ karyawan_form.agen_id.label }}</label>
+            <input type="text" id="username-success" class="bg-green-50 border border-green-500 text-green-900 placeholder-green-700 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-green-100 dark:border-green-400" placeholder="Bonnie Green">
+
+            {{ karyawan_form.agen_id }}
+        </div>
+        <div class="mb-6">
+            <label for="username-success" class="block mb-2 text-sm font-medium text-green-700 dark:text-green-500">{{ karyawan_form.kota_karyawan.label }}</label>
+            <input type="text" id="username-success" class="bg-green-50 border border-green-500 text-green-900 placeholder-green-700 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-green-100 dark:border-green-400" placeholder="Bonnie Green">
+
+            {{ karyawan_form.kota_karyawan }}
+        </div>
+        <!-- <div class="mb-6">
+            <label for="username-success" class="block mb-2 text-sm font-medium text-green-700 dark:text-green-500">{{ karyawan_form.tanggal_masuk.label }}</label>
+            <input type="text" id="username-success" class="bg-green-50 border border-green-500 text-green-900 placeholder-green-700 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-green-100 dark:border-green-400" placeholder="Bonnie Green">
+
+            {{ karyawan_form.tanggal_masuk }} -->
+        </div>
+
     </table>
     <br>
     <button type="Submit">Kirim</button>

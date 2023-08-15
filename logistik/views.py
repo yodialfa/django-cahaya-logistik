@@ -1,6 +1,10 @@
 from django.shortcuts import render, redirect
 from logistik.models import Karyawan, Branch
-from .forms import *
+from django.http import JsonResponse, HttpResponse
+from django.contrib import messages
+from .forms import * 
+from django.core.paginator import Paginator
+import time
 
 # from django.http import HttpResponse
 
@@ -42,15 +46,40 @@ def laporan_harian(request):
 
 
 def data_karyawan(request):
-#    //query ambil data Karyawan
-    karyawans = Karyawan.objects.all()
+     #    //query ambil data Karyawan
+    karyawans = Karyawan.objects.all().order_by('nama_karyawan')
+    items_per_page = 15
+    paginator  = Paginator(karyawans,items_per_page)
+    page_list = request.GET.get('page')
+    page = paginator.get_page(page_list)
+    karyawan_form = karyawanForms(request.POST or None)
+
+    if request.method == 'POST':
+        if karyawan_form.is_valid():
+            karyawan_form.save()
+            messages.success(request, 'Input was successful!')
+            time.sleep(2)
+            return redirect('logistik:karyawan')
+            
+        
+#         # redirect('logistik:karyawan')
+        else:
+            karyawan_form = KaryawanForm()
+
     konteks = {
         'title' : 'Data Karyawan',
         'headings' : 'Data Karyawan',
-        'karyawans' : karyawans,
+        'page' : page,
+        'karyawan_form': karyawan_form,
+        'items_per_page': items_per_page,
 
     }
-    return render(request, 'data_karyawan.html', konteks)
+    if request.headers.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
+        return JsonResponse({'success': False, 'errors': karyawan_form.errors})
+    else:
+        return render(request, 'data_karyawan.html', konteks)
+    # return render(request, 'data_karyawan.html', konteks)
+
 
 def detailKaryawan(request,slug_karyawan):
 #    //query ambil data Karyawan
@@ -101,6 +130,7 @@ def temp(request):
 
 def tambah_karyawan(request):
     karyawan_form = karyawanForms(request.POST or None)
+    print(request.POST)
     if request.method == 'POST':
         if karyawan_form.is_valid():
             karyawan_form.save()
