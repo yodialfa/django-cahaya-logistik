@@ -1,25 +1,78 @@
-from django.shortcuts import render, redirect
-from logistik.models import Karyawan, Branch
+from django.shortcuts import render, redirect,  get_object_or_404
+from logistik.models import Karyawan, Branch, Customer, Receiver
 from django.http import JsonResponse, HttpResponse
 from django.contrib import messages
 from .forms import * 
 from django.core.paginator import Paginator
 import time
+from dal import autocomplete
 
 # from django.http import HttpResponse
 
 def cs(request):
-    id_agen = 1
-    id_karyawan = 1
-    nama_karyawan = "Yodi"
-    
+    if request.method == 'POST':
+        form = CSInput(request.POST)
+        if form.is_valid():
+            customer_phone = form.cleaned_data['no_hp_pengirim']
+            name_cust = form.cleaned_data['nama_pengirim']
+            customer, created = Customer.objects.get_or_create(
+                no_hp_cust=customer_phone, nama_nama=name_cust
+            )
+            form.instance.customer = customer
+            form.save()
+            # Redirect or perform other actions
+        
+    else:
+        form = CSInput()
+
     konteks = {
         'title' : 'CS Input',
-        'id_agen' : id_agen,
-        'id_karyawan' : id_karyawan,
-        'nama_karyawan' : nama_karyawan,
+        'form' : form,
     }
-    return render(request,'cs.html',konteks)
+        
+    return render(request, 'cs.html', konteks)
+
+
+class CustomerAutocomplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        qs = Customer.objects.all()
+        if self.q:
+            qs = qs.filter(no_hp_cust__icontains=self.q)  # Modify based on your needs
+        return qs
+    
+    def get_result_label(self, item):
+        return item.no_hp_cust  # Display the phone number in the autocomplete suggestions
+
+def get_receiver_names(request):
+    phone_receiver = request.GET.get('no_hp_receiver')
+    matching_customers = Receiver.objects.filter(no_hp_penerima__icontains=phone_receiver)
+
+    receiver_data = []
+    for customer in matching_customers:
+        customer_data = {
+            'cust_phone' : customer.no_hp_penerima,
+            'cust_name'  : customer.nama_penerima,
+            'cust_address' : customer.alamat_penerima,
+        }
+        receiver_data.append(customer_data)
+    return JsonResponse({'receiver': receiver_data})
+
+def get_customer_names(request):
+    phone_number = request.GET.get('no_hp_cust')
+    matching_customers = Customer.objects.filter(no_hp_cust__icontains=phone_number)
+
+    customers_data = []
+    for customer in matching_customers:
+        customer_data = {
+            'cust_phone' : customer.no_hp_cust,
+            'cust_name'  : customer.nama_cust,
+            'cust_address' : customer.alamat_cust,
+        }
+        customers_data.append(customer_data)
+    return JsonResponse({'customers': customers_data})
+
+
+
 
 def keuangan(request):
     return render(request,'keuangan.html')

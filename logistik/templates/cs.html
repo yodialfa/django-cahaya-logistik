@@ -1,9 +1,69 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {{ id_agen }}
-    {{ id_karyawan }}
-    {{ nama_karyawan }}
 
-    <h1 class="text-red-500">Asuuuuuuu</h1>
+    <!-- Your form template -->
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Create Order</button>
+    </form>
+
+    <script>
+      $(document).ready(function () {
+        $('#phone-input').on('change', function() {
+          const phoneInput = $(this);
+          const selectedPhone = phoneInput.val();
+    
+          if (selectedPhone) {
+            // Fetch the corresponding customer details from the server
+            $.ajax({
+              url: '{% url "logistik:get-customer-names" %}',
+              data: { no_hp_cust: selectedPhone },
+              dataType: 'json',
+              success: function(data) {
+                if (data.customers && data.customers.length > 0) {
+                  const customerData = data.customers[0]; // Consider the first customer for simplicity
+                  $('#id_nama_pengirim').val(customerData.cust_name); // Update the value of the name field
+                  $('#id_alamat_pengirim').val(customerData.cust_address); // Update the value of the address field
+                  // You can also update other fields similarly
+                }
+              },
+              error: function() {
+                // Handle error
+              }
+            });
+          }
+        });
+        $('#receiver-input').on('change', function() {
+          const phoneReceiver = $(this);
+          const selectedReceiver = phoneReceiver.val();
+    
+          if (selectedReceiver) {
+            // Fetch the corresponding customer details from the server
+            $.ajax({
+              url: '{% url "logistik:get-receiver-names" %}',
+              data: { no_hp_receiver: selectedReceiver },
+              dataType: 'json',
+              success: function(data) {
+                if (data.receiver && data.receiver.length > 0) {
+                  const customerReceiver = data.receiver[0]; // Consider the first customer for simplicity
+                  $('#name_receiver').val(customerReceiver.cust_name); // Update the value of the name field
+                  $('#alamat_receiver').val(customerReceiver.cust_address); // Update the value of the address field
+                  // You can also update other fields similarly
+                }
+              },
+              error: function() {
+                // Handle error
+              }
+            });
+          }
+        });
+      });
+
+
+    </script>
+    
+    
+    
 {% endblock %}

@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'autoslug',
     'crispy_forms',
     'crispy_bootstrap5',
+    'dal',
+    'dal_select2',
     # "django_browser_reload",
 ]
 

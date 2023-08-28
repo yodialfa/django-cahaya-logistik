@@ -16,6 +16,9 @@ urlpatterns = [
     path('karyawan/detail/<slug:slug_karyawan>/', detailKaryawan, name="detail_karyawan"),
     path('karyawan/tambah_karyawan/', tambah_karyawan, name="tambah_karyawan"),
     path('temp/', temp, name="temp"),
+    path('customer-autocomplete/', CustomerAutocomplete.as_view(), name='customer-autocomplete'),
+    path('get-customer-names/', get_customer_names, name='get-customer-names'),
+    path('get-receiver-names/', get_receiver_names, name='get-receiver-names'),
     # url(r'^$', views.index, name='index'),
 
 ]

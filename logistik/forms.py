@@ -1,8 +1,10 @@
 from django.forms import ModelForm
-from logistik.models import Karyawan
+from logistik.models import Karyawan, Customer, Transaksi
 from django import forms
 from django.utils.text import slugify
-from django.db.models import Max
+# from django.db.models import Max
+from dal import autocomplete
+# from django.urls import reverse_lazy
 
 class karyawanForms(forms.ModelForm):
     class Meta:
@@ -31,22 +33,49 @@ class karyawanForms(forms.ModelForm):
         }
    
 
-    
 
-    # def save(self, *args, **kwargs):  # new
-    # if not self.slug_karyawan:
-    #   self.slug_karyawan = slugify(self.id)
-    #   super(Karyawan, self).save(*args, **kwargs)
+class PhoneAutocomplete(autocomplete.Select2ListView):
+    def get_list(self):
+        q = self.q
+        return list(Customer.objects.filter(no_hp_cust__icontains=q).values_list('no_hp_cust', flat=True))
+
+class CSInput(forms.ModelForm):
+    class Meta:
+        model = Transaksi
+        fields = ['do_po',
+                  'no_resi',
+                  'no_hp_pengirim',
+                  'nama_pengirim',
+                  'alamat_pengirim',
+                  'no_hp_penerima',
+                  'nama_penerima',
+                  'alamat_penerima',
+                  'layanan',
+                  'asal',
+                  'tujuan',
+                  'tujuan_coveran',
+                  'harga_id',
+                  'berat',
+                  'diskon',
+                  'biaya_surat',
+                  'biaya_packing',
+                  'jenis_barang',
+                  'taksasi',
+                  'premi_asuransi',
+                  'total_cash',
+                  'total_bayartujuan',
+                  'total_transaksi']
+        widgets = {
+            'no_hp_pengirim': forms.TextInput(attrs={'id': 'phone-input', 'data-placeholder': 'Type customer phone number'}),
+            'nama_pengirim': forms.TextInput(attrs={'id': 'id_nama_pengirim'}),
+            'alamat_pengirim': forms.TextInput(attrs={'id': 'id_alamat_pengirim'}),
+            'no_hp_penerima': forms.TextInput(attrs={'id':'receiver-input','data-placeholder':'Type customer phone number'}),
+            'nama_penerima': forms.TextInput(attrs={'id':'name_receiver'}),
+            'alamat_penerima': forms.TextInput(attrs={'id':'alamat_receiver'}),
 
 
-    # def save(self, commit=True):
-    #     instance = super(karyawanForms, self).save(commit=False)
-    #     instance.slug_karyawan = str(instance.id)
-    #     if commit:
-    #         instance.save()
-    #     return instance
+            # ... other widgets ...
+        }
 
 
-class cabangMain(forms.Form):
-    title = 'Data Cabang'
-    
+

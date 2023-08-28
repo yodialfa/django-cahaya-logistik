@@ -3,6 +3,8 @@ from django.utils.text import slugify
 from autoslug import AutoSlugField
 
 
+
+
 class Customer(models.Model):
  nama_cust = models.CharField(max_length=50)
  alamat_cust = models.TextField()
@@ -119,30 +121,81 @@ class Harga(models.Model):
 
   def __str__(self):
     return "{}. {}".format(self.asal, self.tujuan_coveran)
+  
+class Customer(models.Model):
+  flag = (
+        ('ret', 'Retail'),
+        ('comp', 'Company'),
+    )
+  no_hp_cust = models.CharField(max_length=15)
+  nama_cust = models.CharField(max_length=30)
+  alamat_cust = models.TextField(max_length=50)
+  flag_cust = models.CharField(max_length=10 ,choices=flag, default='ret')
+
+  def __str__(self):
+    return self.no_hp_cust
+  
+class Receiver(models.Model):
+  no_hp_penerima = models.CharField(max_length=15)
+  nama_penerima = models.CharField(max_length=30)
+  alamat_penerima = models.CharField(max_length=50)
+
+  def __str__(self):
+    return self.no_hp_penerima
 
 
-# class Transaksi(models.Model):
-#     do_po = models.CharField(max_length=50)
-#     nama_pengirim = models.CharField(max_length=20)
-#     alamat_pengirim = models.CharField(max_length=50)
-#     no_hp_pengirim = models.CharField(max_length=15)
-#     nama_penerima = models.CharField(max_length=20)
-#     alamat_penerima = models.CharField(max_length=50)
-#     no_hp_penerima = models.CharField(max_length=15)
-#     layanan = models.CharField(max_length=10)
-#     harga_id = models.ForeignKey(Customer, on_delete = models.CASCADE, null=True)
-#     berat = models.IntegerField()
-#     diskon = models.IntegerField()
-#     biaya_surat = models.IntegerField()
-#     biaya_packing = models.IntegerField()
-#     jenis_barang = models.CharField(max_length=20)
-#     taksasi = models.IntegerField()
-#     premi_asuransi = models.IntegerField()
-#     total_cash = models.IntegerField()
-#     total_bayartujuan = models.IntegerField()
-#     total_transaksi = models.IntegerField()
-#     karyawan_id = models.ForeignKey(Karyawan, on_delete = models.CASCADE, null=True)
-#     branch_id = models.ForeignKey(Branch, on_delete = models.CASCADE,null=True)
 
-    # def __str__(self):
-    #   return self.nama_pengirim
+class Transaksi(models.Model):
+    flag_layanan = (
+          ('darat', 'darat'),
+          ('laut','laut'),
+          ('udara','udara'),
+          ('towing','towing'),
+          ('trucking','trucking'),
+          ('city','city'),
+    )
+    do_po = models.CharField(max_length=50, null=True)
+    no_resi = models.CharField(max_length=20, primary_key=True)
+    no_hp_pengirim = models.ForeignKey(Customer, on_delete = models.CASCADE, null=True)
+    nama_pengirim = models.CharField(max_length=20)
+    alamat_pengirim = models.CharField(max_length=50)
+    no_hp_penerima = models.CharField(max_length=15)
+    nama_penerima = models.CharField(max_length=20)
+    alamat_penerima = models.CharField(max_length=50)
+    layanan = models.CharField(max_length=10, choices=flag_layanan, default='darat')
+    asal = models.CharField(max_length=20)
+    tujuan = models.CharField(max_length=20)
+    tujuan_coveran = models.CharField(max_length=20)
+    harga_id = models.IntegerField(default=0)
+    berat = models.IntegerField(default=0)
+    diskon = models.IntegerField(default=0)
+    biaya_surat = models.IntegerField(default=0)
+    biaya_packing = models.IntegerField(default=0)
+    jenis_barang = models.CharField(max_length=20)
+    taksasi = models.IntegerField(default=0)
+    premi_asuransi = models.IntegerField(default=0)
+    total_cash = models.IntegerField(default=0)
+    total_bayartujuan = models.IntegerField(default=0)
+    total_transaksi = models.IntegerField(default=0)
+    status_trx = models.CharField(max_length=25, default='1')
+    no_manivest = models.CharField(max_length=25, null=True)
+    karyawan_id = models.ForeignKey(Karyawan, on_delete = models.CASCADE, null=True)
+    id_agen = models.ForeignKey(Agen, on_delete = models.CASCADE,null=True)
+    id_branch = models.ForeignKey(Branch, on_delete=models.CASCADE, null=True)
+    slug_transkasi = AutoSlugField(populate_from='no_transaksi', null=True )
+
+    # def save(self, *args, **kwargs):
+    # super(Transaksi, self).save()
+    # if not self.no_resi:
+    #   if self.branch_id:
+    #     # Access the related Branch object
+    #     related_branch = self.branch_id
+
+    #     # Access the id_branch field of the related Branch
+    #     self.no_resi = str(related_branch.id_branch) + str(self.no_resi)
+    #     self.slug_transaksi = self.id_karyawan
+
+    # super(Transaksi, self).save(*args, **kwargs)
+
+    def __str__(self):
+      return self.no_resi
