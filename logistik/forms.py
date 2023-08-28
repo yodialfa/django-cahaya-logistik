@@ -66,6 +66,7 @@ class CSInput(forms.ModelForm):
                   'total_bayartujuan',
                   'total_transaksi']
         widgets = {
+            'no_resi' : forms.TextInput(attrs={'id' : 'resi'}),
             'no_hp_pengirim': forms.TextInput(attrs={'id': 'phone-input', 'data-placeholder': 'Type customer phone number'}),
             'nama_pengirim': forms.TextInput(attrs={'id': 'id_nama_pengirim'}),
             'alamat_pengirim': forms.TextInput(attrs={'id': 'id_alamat_pengirim'}),

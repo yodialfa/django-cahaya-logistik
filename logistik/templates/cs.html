@@ -10,7 +10,29 @@
     </form>
 
     <script>
+      let counter = 0;
+      function generateUniqueID() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0'); // Adding 1 because months are zero-indexed
+        const day = String(now.getDate()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        const miliseconds = String(now.getMilliseconds()).padStart(2,'0');
+        
+        const noResi = `${year}${month}${day}${minutes}${seconds}${miliseconds}${counter}`;
+        counter++;
+
+        return noResi;
+      }
+
+      // Example usage
+      const uniqueID = generateUniqueID();
+      // const uniqueID2 = generateUniqueID();
+
+
       $(document).ready(function () {
+        $('#resi').val(uniqueID); // Update the value of the name field
         $('#phone-input').on('change', function() {
           const phoneInput = $(this);
           const selectedPhone = phoneInput.val();
