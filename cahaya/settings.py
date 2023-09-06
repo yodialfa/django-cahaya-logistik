@@ -60,7 +60,17 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     #add manually
     # "django_browser_reload.middleware.BrowserReloadMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     
+]
+# add manually 
+CORS_ALLOW_ALL_ORIGINS = False
+
+# Specify the allowed origin(s)
+CORS_ALLOWED_ORIGINS = [
+    'http://127.0.0.1:8000',
+    # Add other allowed origins if needed
 ]
 
 ROOT_URLCONF = 'cahaya.urls'

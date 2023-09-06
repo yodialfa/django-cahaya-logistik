@@ -1,5 +1,5 @@
 from django.contrib import admin
-from logistik.models import Branch, Agen, Karyawan,Customer, Receiver
+from logistik.models import Branch, Agen, Karyawan,Customer, Receiver, Harga
 
 class KaryawanAdmin(admin.ModelAdmin):
     list_display = ['id','nama_karyawan', 'jabatan','salary','no_hp_karyawan']
@@ -24,4 +24,5 @@ admin.site.register(Agen)
 admin.site.register(Customer)
 admin.site.register(Karyawan, KaryawanAdmin)
 admin.site.register(Receiver)
+admin.site.register(Harga)
 

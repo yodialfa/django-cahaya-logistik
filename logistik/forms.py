@@ -66,13 +66,18 @@ class CSInput(forms.ModelForm):
                   'total_bayartujuan',
                   'total_transaksi']
         widgets = {
-            'no_resi' : forms.TextInput(attrs={'id' : 'resi'}),
-            'no_hp_pengirim': forms.TextInput(attrs={'id': 'phone-input', 'data-placeholder': 'Type customer phone number'}),
-            'nama_pengirim': forms.TextInput(attrs={'id': 'id_nama_pengirim'}),
-            'alamat_pengirim': forms.TextInput(attrs={'id': 'id_alamat_pengirim'}),
-            'no_hp_penerima': forms.TextInput(attrs={'id':'receiver-input','data-placeholder':'Type customer phone number'}),
-            'nama_penerima': forms.TextInput(attrs={'id':'name_receiver'}),
-            'alamat_penerima': forms.TextInput(attrs={'id':'alamat_receiver'}),
+            'do_po' : forms.TextInput(attrs={'class': 'border rounded p-2 w-full'}),
+            'no_resi' : forms.TextInput(attrs={'id' : 'resi','class' : 'border rounded p-2 w-full'}),
+            'no_hp_pengirim': forms.TextInput(attrs={'id': 'phone-input', 'data-placeholder': 'Type customer phone number','class' : 'border rounded p-2 w-full'}),
+            'nama_pengirim': forms.TextInput(attrs={'id': 'id_nama_pengirim','class' : 'border rounded p-2 w-full'}),
+            'alamat_pengirim': forms.TextInput(attrs={'id': 'id_alamat_pengirim', 'class' : 'border rounded p-2 w-full'}),
+            'no_hp_penerima': forms.TextInput(attrs={'id':'receiver-input','data-placeholder':'Type customer phone number','class' : 'border rounded p-2 w-full'}),
+            'nama_penerima': forms.TextInput(attrs={'id':'name_receiver','class' : 'border rounded p-2 w-full'}),
+            'alamat_penerima': forms.TextInput(attrs={'id':'alamat_receiver','class' : 'border rounded p-2 w-full'}),
+            'asal' : forms.Select(attrs={'class' : 'border rounded p-2 w-full selectasal'}),
+            'tujuan' : forms.Select(attrs={'class' : 'border rounded p-2 w-full selecttujuan'}),
+            'tujuan_coveran' : forms.TextInput(attrs={'class' : 'border rounded p-2 w-full tujuan_cov'}),
+            'harga_id' : forms.TextInput(attrs={'class' : 'border rounded p-2 w-full price'}),
 
 
             # ... other widgets ...

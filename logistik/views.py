@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect,  get_object_or_404
-from logistik.models import Karyawan, Branch, Customer, Receiver
+from logistik.models import Karyawan, Branch, Customer, Receiver, Harga
 from django.http import JsonResponse, HttpResponse
 from django.contrib import messages
 from .forms import * 
@@ -32,6 +32,33 @@ def cs(request):
         
     return render(request, 'cs.html', konteks)
 
+
+
+def get_coverage(request):
+    cover = request.GET.get('tujuan_coveran')
+    asal = request.GET.get('asal')
+    matching_coveran = Harga.objects.filter(tujuan_kec=cover, asal=asal)
+
+    coverage_data = []
+    for cov in matching_coveran:
+        coveran_data = {
+            'kec' : cov.tujuan_kec,
+            'tuj_cov'  : cov.tujuan_coveran,
+            'price' : cov.price_kg,
+        }
+        coverage_data.append(coveran_data)
+    return JsonResponse({'coverage': coverage_data})
+
+
+def get_distinct_city(request):
+    disticnt_city = Harga.objects.values_list('asal', flat=True).distinct()
+    city_list = [{'id': asal, 'text': asal} for asal in disticnt_city]
+    return JsonResponse(city_list, safe=False)
+
+def get_distinct_tujuan(request):
+    distinct_tujuan = Harga.objects.values_list('tujuan_kec', flat=True).distinct()
+    tujuan_list = [{'id': tujuan_kec, 'text': tujuan_kec} for tujuan_kec in distinct_tujuan]
+    return JsonResponse(tujuan_list, safe=False)
 
 class CustomerAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):

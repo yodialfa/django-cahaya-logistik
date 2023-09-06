@@ -19,6 +19,9 @@ urlpatterns = [
     path('customer-autocomplete/', CustomerAutocomplete.as_view(), name='customer-autocomplete'),
     path('get-customer-names/', get_customer_names, name='get-customer-names'),
     path('get-receiver-names/', get_receiver_names, name='get-receiver-names'),
+    path('get_distinct_city/', get_distinct_city, name='get_distinct_city'),
+    path('get_distinct_tujuan/', get_distinct_tujuan, name='get_distinct_tujuan'),
+    path('get_coverage/', get_coverage, name='get_coverage'),
     # url(r'^$', views.index, name='index'),
 
 ]

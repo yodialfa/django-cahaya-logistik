@@ -1,12 +1,88 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <!-- Your form template -->
+    <div class=" border-2 px-5 py-4 border-gray-200 border-dashed rounded-lg  overflow-y-scroll max-h-[600px]">
     <form method="post">
       {% csrf_token %}
-      {{ form.as_p }}
+      <table>
+          <div class="mb-3">
+              <label for="username-success" class="block mb-2 text-sm font-medium text-black dark:text-black">{{ form.do_po.label }}</label>
+          
+              {{ form.do_po }}
+          </div>
+          <div class="mb-3">
+              <label for="username-success" class="block mb-2 text-sm font-medium text-black dark:text-black">{{ form.no_resi.label }}</label>
+              
+              {{ form.no_resi }}
+          </div>
+          <div class="mb-6">
+              <label for="username-success" class="block mb-2 text-sm font-medium text-black dark:text-black">{{ form.no_hp_pengirim.label }}</label>
+              
+              {{ form.no_hp_pengirim }}
+          </div>
+          <div class="mb-6">
+              <label for="username-success" class="block mb-2 text-sm font-medium text-black dark:text-black">{{ form.nama_pengirim.label }}</label>
+            
+              {{ form.nama_pengirim }}
+          </div>
+          <div class="mb-6">
+            <label for="username-success" class="block mb-2 text-sm font-medium text-black dark:text-black">{{ form.alamat_pengirim.label }}</label>
+
+            {{ form.alamat_pengirim}}
+        </div>
+          <div class="mb-6">
+              <label for="username-success" class="block mb-2 text-sm font-medium text-black dark:text-black">{{ form.no_hp_penerima.label }}</label>
+
+              {{ form.no_hp_penerima}}
+          </div>
+          <div class="mb-6">
+              <label for="username-success" class="block mb-2 text-sm font-medium text-black dark:text-black">{{ form.nama_penerima.label }}</label>
+
+              {{ form.nama_penerima }}
+          </div>
+          <div class="mb-6">
+              <label for="username-success" class="block mb-2 text-sm font-medium text-black dark:text-black">{{ form.alamat_penerima.label }}</label>
+
+              {{ form.alamat_penerima }}
+          </div>
+          <div class="mb-6">
+              <label for="username-success" class="block mb-2 text-sm font-medium text-black dark:text-black">{{ form.layanan.label }}</label>
+
+              {{ form.layanan }}
+          </div>
+          <div class="mb-6">
+              <label for="username-success" class="block mb-2 text-sm font-medium text-black dark:text-black">{{ form.asal.label }}</label>
+              <!-- <select name="" id="distinct-select" class="select2"></select> -->
+              {{ form.asal }}
+          </div>
+          <div class="mb-6">
+            <label for="username-success" class="block mb-2 text-sm font-medium text-black dark:text-black">{{ form.tujuan.label }}</label>
+            <!-- <select name="" id="distinct-select" class="select2"></select> -->
+            {{ form.tujuan }}
+          </div>
+          <div class="mb-6">
+            <label for="username-success" class="block mb-2 text-sm font-medium text-black dark:text-black">{{ form.tujuan_coveran.label }}</label>
+            {{ form.tujuan_coveran }}
+          </div>
+          <div class="mb-6">
+            <label for="username-success" class="block mb-2 text-sm font-medium text-black dark:text-black">{{ form.harga_id.label }}</label>
+            {{ form.harga_id }}
+          </div>
+          <!-- <div class="mb-6">
+              <label for="username-success" class="block mb-2 text-sm font-medium text-black dark:text-black">{{ karyawan_form.tanggal_masuk.label }}</label>
+              <input type="text" id="username-success" class="bg-green-50 border border-green-500 text-green-900 placeholder-green-700 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5 dark:bg-green-100 dark:border-green-400" placeholder="Bonnie Green">
+
+              {{ karyawan_form.tanggal_masuk }} -->
+          </div>
+
+      </table>
+      <!-- {{ form.as_p }} -->
       <button type="submit">Create Order</button>
+    </div>
     </form>
 
     <script>
@@ -26,12 +102,106 @@
         return noResi;
       }
 
+
+      var selectedKec = '';
+      var asal_val = '';
+      function handleFieldChange() {
+        if(selectedKec !== '' && asal_val !== '') {
+          // const tujuanKec = $(this);
+          // const selectedKec = tujuanKec.val();
+          // var asal_val = $('.selectasal').val();
+    
+          if (selectedKec) {
+            // Fetch the corresponding customer details from the server
+            $.ajax({
+              url: '{% url "logistik:get_coverage" %}',
+              data: { tujuan_coveran: selectedKec, asal: asal_val },
+              dataType: 'json',
+              success: function(data) {
+                if (data.coverage && data.coverage.length > 0) {
+                  const coveran = data.coverage[0]; // Consider the first customer for simplicity
+                  $('.selecttujuan').val(coveran.kec); // Update the value of the name field
+                  $('.tujuan_cov').val(coveran.tuj_cov); // Update the value of the name field
+                  $('.price').val(coveran.price); // Update the value of the name field
+                  // You can also update other fields similarly
+                }
+                else{
+                  console.log('error')
+                }
+              },
+              error: function() {
+                // Handle error
+              }
+            });
+          }
+        }
+        
+      }
+
       // Example usage
       const uniqueID = generateUniqueID();
       // const uniqueID2 = generateUniqueID();
 
 
       $(document).ready(function () {
+
+        $('.selecttujuan').select2({
+          // $('#your_select2_input_id').select2({
+          ajax: {
+                  url: 'http://127.0.0.1:8000/logistik/get_distinct_tujuan/',
+                  dataType: 'json',
+                  delay: 250,
+                  tujuan_list: function(params) {
+                      return {
+                          term: params.term
+                      };
+                  },
+                  processResults: function(tujuan_list) {
+                      return {
+                          results: tujuan_list
+                      };
+                  },
+                  cache: true
+              },
+                minimumInputLength: 3
+          });
+
+        $('.selecttujuan').on('change', function() {
+          selectedKec = $(this).val();
+          handleFieldChange();
+        });
+
+        $('.selectasal').on('change', function() {
+          asal_val = $(this).val();
+          handleFieldChange();
+        });
+
+
+
+          
+
+        $('.selectasal').select2({
+          // $('#your_select2_input_id').select2({
+          ajax: {
+                  url: 'http://127.0.0.1:8000/logistik/get_distinct_city/',
+                  dataType: 'json',
+                  delay: 250,
+                  city_list: function(params) {
+                      return {
+                          term: params.term
+                      };
+                  },
+                  processResults: function(city_list) {
+                      return {
+                          results: city_list
+                      };
+                  },
+                  cache: true
+              },
+                minimumInputLength: 3
+          });
+
+
         $('#resi').val(uniqueID); // Update the value of the name field
         $('#phone-input').on('change', function() {
           const phoneInput = $(this);
